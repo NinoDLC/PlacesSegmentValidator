@@ -4,49 +4,23 @@ import java.io.File
 
 fun main(args: Array<String>) {
     println("Hello Wafae!")
-    println("Quel est le numéro de voiture ?")
+    println("Mode [1] Segment ou Mode [2] Desserte ?")
+    var mode = readLine()
 
-    var carNumber = readLine()
-
-    while (!carNumber.isNullOrBlank()) {
-
-        println("Tu as choisi la voiture: $carNumber")
-
-        val courseResponse = Gson().fromJson(
-            File("data/placesLibresSurSegment.json").bufferedReader(),
-            CourseResponse::class.java
-        )
-
-        if (courseResponse != null) {
-            if (courseResponse.course != null) {
-                val segment = courseResponse.course.segment.firstOrNull()
-                if (segment != null) {
-                    val rame = segment.rame.firstOrNull()
-                    if (rame != null) {
-                        val car = rame.voiture.find { it.numero == carNumber }
-                        if (car != null) {
-                            println("Available seats")
-                            println("First class:")
-                            println(car.place.filter { it.classe == "1" }.map { it.numero })
-                            println("Second class:")
-                            println(car.place.filter { it.classe == "2" }.map { it.numero })
-                        } else {
-                            println("Parsing error : car is NULL !")
-                        }
-                    } else {
-                        println("Parsing error : rame is NULL !")
-                    }
-                } else {
-                    println("Parsing error : segment is NULL !")
-                }
-            } else {
-                println("Parsing error : course is NULL !")
+    while (!mode.isNullOrBlank()) {
+        when (mode) {
+            "1" -> {
+                println("Segment mode activated!")
+                SegmentMode()
             }
-        } else {
-            println("Parsing error : courseResponse is NULL !")
+            "2" -> {
+                println("Desserte mode activated!")
+                DesserteMode()
+            }
+            else -> println("Choisi un mode avec 1 ou 2 !")
         }
 
-        println("Quel est le numéro de voiture ?")
-        carNumber = readLine()
+        println("Mode [1] Segment ou Mode [2] Desserte ?")
+        mode = readLine()
     }
 }

@@ -5,5 +5,6 @@ data class Course(
     val date: String?,
     val numero: String?,
     val segment: List<Segment>,
+    val desserte: List<Desserte>,
     val typeMode: String?
 )
