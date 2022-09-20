@@ -107,7 +107,7 @@ class DesserteMode {
             println("Quel est le numéro de voiture ?")
             carNumber = readLine()
             println("Quel est le numéro de place ? (entrée pour ne rien donner)")
-            seatNumber = readLine()
+            seatNumber = readLine().takeIf { !it.isNullOrBlank() }
         }
     }
 }
